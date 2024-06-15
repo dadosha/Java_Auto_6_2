@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -21,11 +22,15 @@ public class CreditCardsPage {
 
     public TransferMoneyPage openTransferCardPage(String hiddenCardNumber) {
         cardInfo(hiddenCardNumber).find("button").click();
-        return new TransferMoneyPage();
+        return new TransferMoneyPage(hiddenCardNumber);
     }
 
     public String getCardforNumberList(int number) {
         return $$("ul.list li div").get(number - 1).text().substring(0, 19);
+    }
+
+    public void checkNewBalanceCard(String hiddenToCard, int cardBalance) {
+        cardInfo(hiddenToCard).shouldHave(Condition.exactText(hiddenToCard + ", баланс: " + String.valueOf(cardBalance) + " р.\nПополнить"));
     }
 
     public int getCardBalance(String hiddenCardNumber) {

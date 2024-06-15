@@ -40,7 +40,6 @@ public class TemplateSteps {
         String cardToNumber = creditCardsPage.getCardforNumberList(numberListCardTo);
         String hiddenToCard = hiddenCard(cardToNumber);
         var transferPage = creditCardsPage.openTransferCardPage(hiddenToCard);
-        transferPage.transferToCardFieldGet().shouldHave(Condition.value(hiddenToCard));
         creditCardsPage = transferPage.successTransferMoney(amount, cardFromNumber);
     }
 
@@ -48,7 +47,6 @@ public class TemplateSteps {
     public void checkBalance(int numberListCardTo, int cardBalance) {
         String cardToNumber = creditCardsPage.getCardforNumberList(numberListCardTo);
         String hiddenToCard = hiddenCard(cardToNumber);
-        creditCardsPage.cardInfo(hiddenToCard)
-                .shouldHave(Condition.exactText(hiddenToCard + ", баланс: " + String.valueOf(cardBalance) + " р.\nПополнить"));
+        creditCardsPage.checkNewBalanceCard(hiddenToCard, cardBalance);
     }
 }
